@@ -1,6 +1,6 @@
 package com.aelmehdi.kullwell.repositories;
 
-import com.aelmehdi.kullwell.models.Customer;
+import com.aelmehdi.kullwell.models.Recipe;
 import org.junit.ClassRule;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,27 +13,28 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = NONE)
-class CustomerRepositoryTest {
+class RecipeRepositoryTest {
 
     @Autowired
-    CustomerRepository customerRepository;
+    RecipeRepository recipeRepository;
 
     @ClassRule
     public static PostgreSQLContainer postgreSQLContainer = new PostgreSQLContainer("postgres:latest");
 
     @Test
-    void should_save_a_user() {
-        Customer savedUser = customerRepository.save(new Customer(1L, "Yassine", "Nissya"));
+    void should_save_a_recipe() {
+        Recipe savedRecipe = recipeRepository.save(new Recipe(1L, "Fish Tagine",
+                "fish, tomato, onion, potato, olive oil, salt, pepper, ginger"));
 
-        assertThat(savedUser.getFirstName()).isEqualTo("Yassine");
+        assertThat(savedRecipe.getName()).isEqualTo("Fish Tagine");
     }
 
     @Test
-    void should_get_user_by_id() {
-        Customer customer = new Customer(3L, "Bob", "Matt");
+    void should_get_recipe_by_id() {
+        Recipe recipe = new Recipe(3L, "Bob", "Matt");
 
-        customerRepository.save(customer);
+        recipeRepository.save(recipe);
 
-        assertThat(customerRepository.findById(3L).get()).isEqualTo(customer);
+        assertThat(recipeRepository.findById(3L).get()).isEqualTo(recipe);
     }
 }
