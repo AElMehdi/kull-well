@@ -16,15 +16,24 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 class CustomerRepositoryTest {
 
     @Autowired
-    CustomerRepository userRepository;
+    CustomerRepository customerRepository;
 
     @ClassRule
     public static PostgreSQLContainer postgreSQLContainer = new PostgreSQLContainer("postgres:latest");
 
     @Test
     void should_save_a_user() {
-        Customer savedUser = userRepository.save(new Customer(1L, "Yassine", "Nissya"));
+        Customer savedUser = customerRepository.save(new Customer(1L, "Yassine", "Nissya"));
 
         assertThat(savedUser.getFirstName()).isEqualTo("Yassine");
+    }
+
+    @Test
+    void should_get_user_by_id() {
+        Customer customer = new Customer(3L, "Bob", "Matt");
+
+        customerRepository.save(customer);
+
+        assertThat(customerRepository.findById(3L).get()).isEqualTo(customer);
     }
 }
