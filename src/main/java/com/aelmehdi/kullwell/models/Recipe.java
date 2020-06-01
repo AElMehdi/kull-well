@@ -6,9 +6,9 @@ import java.util.Objects;
 
 @Entity(name = "recipe")
 public class Recipe {
-
     @Id
     private Long id;
+
     private String name;
     private String ingredients;
 
